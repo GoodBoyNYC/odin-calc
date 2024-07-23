@@ -6,57 +6,65 @@ const btnNum = document.querySelectorAll(".calcBtn");
 let operand = ''
 
 function updateDisplay(val) {
-    dispArr.shift();
-    dispArr.push(val);
+    // Convert val to a string and split into an array of characters
+    let valArr = val.toString().split("");
+
+    // Remove elements from dispArr and add the new values
+    dispArr = dispArr.slice(valArr.length);  // Remove the same number of elements from the start
+    dispArr = dispArr.concat(valArr);  // Add the new values to the end
+
+    // Update the display content
     display.textContent = dispArr.join("");
-};
+}
 function clearDisplay() {
     dispArr = [0, 0, 0, 0, 0, 0, 0, 0];
     display.textContent = dispArr.join("");
 }
-function reset(){
-    num1=0;
-    num2=0;
-    operand='';
+function reset() {
+    num1 = 0;
+    num2 = 0;
+    operand = '';
     clearDisplay();
 }
 function dispToNum() {
-    if(operand==''){
+    if (operand == '') {
         console.log(`dispToNum: ${operand}; ${num1}; ${num2}`);
         num1 = Number(dispArr.join(""));
-    } else{
+    } else {
         num2 = Number(dispArr.join(""));
     }
     clearDisplay();
 };
-function result(val){
-    clearDisplay();
-    //display.textContent=val;
+function result(val) {
+    reset();
     updateDisplay(val);
 };
 
-function operate(op,num1,num2){
-    console.log(`Func operate    ${op}   ${num1}    ${num2}`);
-    let answer=0;
-    if(operand=='+'){
+//00000000
+//000000066
+
+function operate(op, num1, num2) {
+    console.log(`Func operate ${op}   ${num1}    ${num2}`);
+    let answer = 0;
+    if (operand == '+') {
         console.log('+');
-        answer=num1+num2;
+        answer = num1 + num2;
     }
-    else if(operand=='-'){
+    else if (operand == '-') {
         console.log('-');
-        answer=num1-num2;
+        answer = num1 - num2;
     }
-    else if(operand=='x'){
+    else if (operand == 'x') {
         console.log('x');
-        answer=num1*num2;
+        answer = num1 * num2;
     }
-    else if(operand=='/'){
+    else if (operand == '/') {
         console.log('/');
-        answer=num1/num2;
+        answer = num1 / num2;
     }
-    console.log('This is the answer:'+ answer);
-    result(answer);
-};
+    console.log('This is the answer:' + answer);
+    result(answer.toString().split())
+}
 btnNum.forEach(btn => {
     btn.addEventListener("click", event => {
         if (btn.classList.contains('clear')) {
@@ -69,11 +77,11 @@ btnNum.forEach(btn => {
             //push current display of digits to num1
             console.log(`Operand:${operand}`);
             dispToNum();
-            operand=btn.textContent;
+            operand = btn.textContent;
         }
-        else if (btn.classList.contains("equal")){
+        else if (btn.classList.contains("equal")) {
             dispToNum();
-            operate(operand,num1,num2);
+            operate(operand, num1, num2);
         }
         console.log(`num1:${num1}`);
         console.log(`num2:${num2}`);
