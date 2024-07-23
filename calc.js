@@ -22,6 +22,7 @@ function reset(){
 }
 function dispToNum() {
     if(operand==''){
+        console.log(`dispToNum: ${operand}; ${num1}; ${num2}`);
         num1 = Number(dispArr.join(""));
     } else{
         num2 = Number(dispArr.join(""));
@@ -29,26 +30,31 @@ function dispToNum() {
     clearDisplay();
 };
 function result(val){
-    dispArr.textContent=val;
+    clearDisplay();
+    //display.textContent=val;
+    updateDisplay(val);
 };
 
 function operate(op,num1,num2){
+    console.log(`Func operate    ${op}   ${num1}    ${num2}`);
     let answer=0;
     if(operand=='+'){
+        console.log('+');
         answer=num1+num2;
     }
     else if(operand=='-'){
+        console.log('-');
         answer=num1-num2;
     }
     else if(operand=='x'){
+        console.log('x');
         answer=num1*num2;
     }
     else if(operand=='/'){
+        console.log('/');
         answer=num1/num2;
     }
-    else if(operand=='='){
-        
-    }
+    console.log('This is the answer:'+ answer);
     result(answer);
 };
 btnNum.forEach(btn => {
@@ -61,14 +67,22 @@ btnNum.forEach(btn => {
         }
         else if (btn.classList.contains("operand")) {
             //push current display of digits to num1
+            console.log(`Operand:${operand}`);
             dispToNum();
             operand=btn.textContent;
-            if(btn.textContent=='='){
-                operate(operand,num1,num2);
-            }
         }
-        console.log(num1);
-        console.log(num2);
-        console.log(operand);
+        else if (btn.classList.contains("equal")){
+            dispToNum();
+            operate(operand,num1,num2);
+        }
+        console.log(`num1:${num1}`);
+        console.log(`num2:${num2}`);
+        console.log(`operand:${operand}`);
     })
 });
+
+//console.log(`Operand: ${operand}`);
+// if(btn.textContent=='='){
+//     console.log(`Result     ${operand}    ${num1}    ${num2}`);
+
+// }
