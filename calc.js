@@ -17,16 +17,19 @@ function updateDisplay(val) {
     display.textContent = dispArr.join("");
 }
 function clearDisplay() {
+    //Clears display back to initial array of digits.
     dispArr = [0, 0, 0, 0, 0, 0, 0, 0];
     display.textContent = dispArr.join("");
 }
 function reset() {
+    //Resets variables and clear display.
     num1 = 0;
     num2 = 0;
     operand = '';
     clearDisplay();
 }
 function dispToNum() {
+    //
     if (operand == '') {
         console.log(`dispToNum: ${operand}; ${num1}; ${num2}`);
         num1 = Number(dispArr.join(""));
@@ -40,31 +43,36 @@ function result(val) {
     updateDisplay(val);
 };
 
-//00000000
-//000000066
-
 function operate(op, num1, num2) {
-    console.log(`Func operate ${op}   ${num1}    ${num2}`);
+    //console.log(`Func operate ${op}   ${num1}    ${num2}`);
     let answer = 0;
     if (operand == '+') {
-        console.log('+');
+        //console.log('+');
         answer = num1 + num2;
     }
     else if (operand == '-') {
-        console.log('-');
+        //console.log('-');
         answer = num1 - num2;
     }
     else if (operand == 'x') {
-        console.log('x');
+        //console.log('x');
         answer = num1 * num2;
     }
     else if (operand == '/') {
-        console.log('/');
-        answer = num1 / num2;
+        //console.log('/');
+        if(num2!=0){
+            answer = num1 / num2;
+        }
+        else{
+            alert("Can't divide by 0");
+            answer=0;
+        }
+        
     }
-    console.log('This is the answer:' + answer);
+    //console.log('This is the answer:' + answer);
     result(answer.toString().split())
 }
+
 btnNum.forEach(btn => {
     btn.addEventListener("click", event => {
         if (btn.classList.contains('clear')) {
